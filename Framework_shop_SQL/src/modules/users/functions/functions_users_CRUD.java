@@ -35,16 +35,10 @@ public class functions_users_CRUD {
 	public static void readUsers(int tipo) {
 		String read = "";
 		if (tipo == 0) { // Client
-			for (int i = 0; i < Singleton.users.size(); i++) {
-				User User = Singleton.users.get(i);
-				if (User instanceof Client) {
-					read = read + User + "\n";
-				}
-			}
-			if (read == "") {
-				Functions.mensajeinf("Nothing", "Read");
-			} else {
-				Functions.mensajeinf(read, "READ Clients");
+			try {
+				Functions_sql.readAllClient();
+			} catch (Exception e) {
+				// TODO: handle exception
 			}
 		} // end if Clients
 		if (tipo == 1) { // Admin
@@ -63,52 +57,20 @@ public class functions_users_CRUD {
 		Integer num = 0, cont = 0;
 		ArrayList<Integer> positions = new ArrayList<Integer>();
 		if (tipo == 0) {// Clients
-			for (int i = 0; i < Singleton.users.size(); i++) {
-				User User = Singleton.users.get(i);
-				if (User instanceof Client) {
-					positions.add(i);
-					cont++;
-					read = read + (cont) + "- " + User.getName() + "\n";
-				}
+			try {
+				Functions_sql.deleteClient();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			if (read == "") {
-				Functions.mensajeinf("Nothing to delete, please create a Client", "Delete Client");
-			} else {
-				num = Functions.validnum(read, "Remove Client");
-				if (num == null) {
-					return;
-				} // end if 1
-				if (num > Singleton.users.size()) {
-					Functions.mensajeerror("Insert a valid Client", "Error");
-				} else {
-					int pos = positions.get(num - 1);
-					Singleton.users.remove(pos);
-				} // end else 2
-			} // end else 1
 		} // end if clients
 		if (tipo == 1) {// Admin
-			for (int i = 0; i < Singleton.users.size(); i++) {
-				User Admin = Singleton.users.get(i);
-				if (Admin instanceof Admin) {
-					positions.add(i);
-					cont++;
-					read = read + (cont) + "- " + Admin.getName() + "\n";
-				}
+			try {
+				Functions_sql.deleteAdmin();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			if (read == "") {
-				Functions.mensajeinf("Nothing to delete, please create a Admin", "Delete Admin");
-			} else {
-				num = Functions.validnum(read, "Remove Admin");
-				if (num == null) {
-					return;
-				} // end if 1
-				if (num > Singleton.users.size()) {
-					Functions.mensajeerror("Insert a valid Admin", "Error");
-				} else {
-					int pos = positions.get(num - 1);
-					Singleton.users.remove(pos);
-				} // end else 2
-			} // end else 1
 		} // end if admin
 	}
 
