@@ -24,7 +24,7 @@ public class test1 {
 		JComboBox<String> combo = new JComboBox<String>();
 		String selectbox = "";
 		int optionbox = 0;
-		String consulta = "SELECT username FROM Admin ORDER by username ASC";
+		String consulta = "SELECT * FROM Admin ORDER by username ASC";
 		String opmenu[] = { "OK", "Cancel" };
 		String username = "";
 		// Form admin
@@ -47,26 +47,54 @@ public class test1 {
 		Border borderdefault = new JTextField().getBorder();
 		// Creamos el panel en un objeto para que aparezca en una ventan.
 		Object[] menu = { "Create new Administrator\n\n", "Name", name, "Surname", surname, "Phone (Ex: 623456789)",
-				phone, "Email (Ex: yourname@email.com)", email, "DNI (Ex: 12345678A) ", dni, "Username", username,
+				phone, "Email (Ex: yourname@email.com)", email, "DNI (Ex: 12345678A) ", dni, "Username", usernamefield,
 				"Password", password, "Date Birthday", fbirthday };
 
 		Connection conn = DataConnection.getConnection();
 		PreparedStatement statement = conn.prepareStatement(consulta);
 		ResultSet result = statement.executeQuery();
+
+		String rname = null;
+		String rsurname = null;
+		String rphone = null;
+		String rDNI = null;
+		String remail = null;
+		String rbirthday = null;
+		String rusername = null;
+		String rpassword = null;
 		while (result.next()) {
 			username = result.getString("username");
 			combo.addItem(username);
 		}
-		Object menubox
+		Object menubox[] = { "Select an Admin to modify", combo };
+		optionbox = option = JOptionPane.showInternalOptionDialog(null, menubox, "Admin", 0,
+				JOptionPane.QUESTION_MESSAGE, null, optionmenu, optionmenu[0]);
+		if (option == 1 | option == -1) {
+			return;
+		}
+		selectbox = (String) combo.getSelectedItem();
+		// Mostrar datos de user seleccionado
+		PreparedStatement datos = conn.prepareStatement("SELECT * FROM Admin WHERE username='" + selectbox + "'");
+		ResultSet resultdatos = datos.executeQuery();
+		while (resultdatos.next()) {
+			rname = resultdatos.getString("name");
+			rsurname = resultdatos.getString("surname");
+			rphone = resultdatos.getString("phone");
+			rDNI = resultdatos.getString("DNI");
+			remail = resultdatos.getString("email");
+			rbirthday = resultdatos.getString("birthday");
+			rusername = resultdatos.getString("username");
+			rpassword = resultdatos.getString("password");
+		}
 		do {
-			name.setText("Admin");
-			surname.setText("Admin");
-			phone.setText("686868686");
-			email.setText("admin@shop.com");
-			dni.setText("12345678A");
-			usernamefield.setText("admin");
-			password.setText("Password1$");
-			fbirthday.setText("10/04/2000");
+			name.setText(rname);
+			surname.setText(rsurname);
+			phone.setText(rphone);
+			email.setText(remail);
+			dni.setText(rDNI);
+			usernamefield.setText(rusername);
+			password.setText(rpassword);
+			fbirthday.setText(rbirthday);
 			caderrors = "";
 			error = false;
 			option = JOptionPane.showInternalOptionDialog(null, menu, "Admin", 0, JOptionPane.QUESTION_MESSAGE, null,
@@ -212,13 +240,14 @@ public class test1 {
 		Admin admin = new Admin(getName, getSurname, getPhone, getDNI, getEmail, birthday, getUsername, getPassword);
 		// Añadimos los datos a la BD
 		try {
-			Connection conn2 = DataConnection.getConnection();
-			PreparedStatement posted = conn.prepareStatement(
-					"INSERT INTO Admin (name,surname,phone,DNI,email,birthday,username,password,age) VALUES ('"
-							+ getName + "','" + getSurname + "','" + getPhone + "','" + getDNI + "','" + getEmail
-							+ "','" + birthday.ToString() + "','" + getUsername + "','" + getPassword + "','"
-							+ admin.getAge() + "')");
-			posted.executeUpdate();
+			System.out.println("parte modify");
+			String updatesql = "UPDATE Admin SET name='" + getName + "',surname='" + getSurname + "',phone='" + getPhone
+					+ "',DNI='" + getDNI + "',email='" + getEmail + "',birthday='" + birthday.ToString()
+					+ "',password='" + getPassword + "',age='" + admin.getAge() + "',username='" + getUsername
+					+ "' WHERE username='" + selectbox + "'";
+			PreparedStatement update = conn.prepareStatement(updatesql);
+			System.out.println(selectbox);
+			update.executeUpdate();
 		} catch (Exception e) {
 			System.out.println(e);
 		} finally {
