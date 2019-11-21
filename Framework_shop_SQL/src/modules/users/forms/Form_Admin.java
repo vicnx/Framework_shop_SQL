@@ -14,6 +14,7 @@ import classes.DataConnection;
 import classes.Fecha;
 import functions.Functions;
 import functions.validate;
+import modules.users.classes.Admin;
 
 public class Form_Admin {
 	public static void FormAdmin() {
@@ -189,15 +190,15 @@ public class Form_Admin {
 
 		} while (error == true);
 		// creamos el Admin
-		// Admin admin = new Admin(getName, getSurname, getPhone, getDNI, getEmail,
-		// birthday, getUsername, getPassword);
+		Admin admin = new Admin(getName, getSurname, getPhone, getDNI, getEmail, birthday, getUsername, getPassword);
 		// Añadimos los datos a la BD
 		try {
 			Connection conn = DataConnection.getConnection();
 			PreparedStatement posted = conn.prepareStatement(
-					"INSERT INTO Admin (name,surname,phone,DNI,email,birthday,username,password) VALUES ('" + getName
-							+ "','" + getSurname + "','" + getPhone + "','" + getDNI + "','" + getEmail + "','"
-							+ birthday.ToString() + "','" + getUsername + "','" + getPassword + "')");
+					"INSERT INTO Admin (name,surname,phone,DNI,email,birthday,username,password,age) VALUES ('"
+							+ getName + "','" + getSurname + "','" + getPhone + "','" + getDNI + "','" + getEmail
+							+ "','" + birthday.ToString() + "','" + getUsername + "','" + getPassword + "','"
+							+ admin.getAge() + "')");
 			posted.executeUpdate();
 		} catch (Exception e) {
 			System.out.println(e);
