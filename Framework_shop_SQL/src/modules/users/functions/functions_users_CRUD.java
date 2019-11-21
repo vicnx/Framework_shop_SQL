@@ -178,100 +178,11 @@ public class functions_users_CRUD {
 			}
 		} // end if client
 		if (tipo == 1) {// Admin
-			for (int i = 0; i < Singleton.users.size(); i++) {
-				User Admin = (Admin) Singleton.users.get(i);
-				if (Admin instanceof Admin) {
-					positions.add(i);
-					cont++;
-					read = read + (cont) + "- " + Admin.getName() + "\n";
-				} // end instanceof Admin
-			} // end for Admin
-			if (read == "") {
-				Functions.mensajeinf("Nothing to modify, please create a Admin", "Update Admin");
-			} else {
-				num = Functions.validnum(read, "Update Admin");
-				if (num == null) {
-					return;
-				}
-				if (num > Singleton.users.size()) {
-					Functions.mensajeerror("Insert a valid Admin", "Error");
-				} else {
-					positionReal = positions.get(num - 1);
-					admin = (Admin) Singleton.users.get(positionReal);
-					option = Functions.menucombo(optionadmin, "Admin", "Modify?");
-					if (option == null) {
-						return;
-					}
-					switch (option) {
-					case "Update_name":
-						name = Datos_users.pidename();
-						if (name == null) {
-							return;
-						} else {
-							admin.setName(name);
-						}
-						break;
-					case "Update_surname":
-						surname = Datos_users.pidesurname();
-						if (surname == null) {
-							return;
-						} else {
-							admin.setSurname(surname);
-						}
-						break;
-					case "Update_phone":
-						phone = Datos_users.pidephone();
-						if (phone == null) {
-							return;
-						} else {
-							admin.setPhone(phone);
-						}
-						break;
-					case "Update_DNI":
-						DNI = Datos_users.pidedni();
-						if (DNI == null) {
-							return;
-						} else {
-							admin.setDNI(DNI);
-						}
-						break;
-					case "Update_email":
-						email = Datos_users.pideemail();
-						if (email == null) {
-							return;
-						} else {
-							admin.setEmail(email);
-						}
-						break;
-					case "Update_birthday":
-						birthday = Datos_users.pidebirthday();
-						if (birthday == null) {
-							return;
-						} else {
-							admin.setBirthday(birthday);
-							age = admin.calculateAge();
-							admin.setAge(age);
-						}
-						break;
-					case "Update_username":
-						username = Datos_users.pideusername();
-						if (username == null) {
-							return;
-						} else {
-							admin.setUsername(username);
-							;
-						}
-						break;
-					case "Update_password":
-						password = Datos_users.pidepassword();
-						if (password == null) {
-							return;
-						} else {
-							admin.setPassword(password);
-						}
-					}// fincase
-
-				} // finelse
+			try {
+				Functions_sql.UpdateAdmin();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		} // end if Admin
 	}// end update user
