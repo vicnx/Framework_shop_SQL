@@ -179,7 +179,7 @@ public class Form_Client {
 							+ client.getAge() + "')");
 			posted.executeUpdate();
 		} catch (Exception e) {
-			System.out.println(e);
+			Functions.mensajeerror("idclient duplicado", "Error");
 		} finally {
 			System.out.println("Insert COmpleted");
 		}

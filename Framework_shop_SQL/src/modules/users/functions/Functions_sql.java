@@ -18,6 +18,7 @@ import classes.Fecha;
 import functions.Functions;
 import functions.validate;
 import modules.users.classes.Admin;
+import modules.users.classes.Client;
 
 public class Functions_sql {
 	// read all Admins
@@ -181,7 +182,7 @@ public class Functions_sql {
 		Border bordererror = BorderFactory.createLineBorder(Color.RED, 1);
 		Border borderdefault = new JTextField().getBorder();
 		// Creamos el panel en un objeto para que aparezca en una ventan.
-		Object[] menu = { "Create new Administrator\n\n", "Name", name, "Surname", surname, "Phone (Ex: 623456789)",
+		Object[] menu = { "Update an Administrator\n\n", "Name", name, "Surname", surname, "Phone (Ex: 623456789)",
 				phone, "Email (Ex: yourname@email.com)", email, "DNI (Ex: 12345678A) ", dni, "Username", usernamefield,
 				"Password", password, "Date Birthday", fbirthday };
 
@@ -204,7 +205,7 @@ public class Functions_sql {
 		Object menubox[] = { "Select an Admin to modify", combo };
 		optionbox = option = JOptionPane.showInternalOptionDialog(null, menubox, "Admin", 0,
 				JOptionPane.QUESTION_MESSAGE, null, optionmenu, optionmenu[0]);
-		if (option == 1 | option == -1) {
+		if (optionbox == 1 | optionbox == -1) {
 			return;
 		}
 		selectbox = (String) combo.getSelectedItem();
@@ -384,9 +385,224 @@ public class Functions_sql {
 			System.out.println(selectbox);
 			update.executeUpdate();
 		} catch (Exception e) {
-			System.out.println(e);
+			Functions.mensajeerror("DNI duplicado", "Error");
 		} finally {
 			System.out.println("Insert COmpleted");
+		}
+
+	}
+
+	public static void UpdateClient() throws Exception {
+		// Select Admin
+		JComboBox<String> combo = new JComboBox<String>();
+		String selectbox = "";
+		int optionbox = 0;
+		String consulta = "SELECT * FROM Client ORDER by idclient ASC";
+		String opmenu[] = { "OK", "Cancel" };
+		String idclient = "";
+		// Form admin
+		String caderrors = "", getName = "", getSurname = "", getPhone = "", getDNI = "", getEmail = "",
+				getIdclient = "", getBirthday = "";
+		Fecha birthday = null;
+		boolean error = false;
+		String optionmenu[] = { "Update", "Return" };
+		Integer option = 0;
+		JTextField name = new JTextField();
+		JTextField surname = new JTextField();
+		JTextField phone = new JTextField();
+		JTextField email = new JTextField();
+		JTextField idclientfield = new JTextField();
+		JTextField dni = new JTextField();
+		JTextField fbirthday = new JTextField();
+		// Creamos unos bordes para apariencia
+		Border bordererror = BorderFactory.createLineBorder(Color.RED, 1);
+		Border borderdefault = new JTextField().getBorder();
+		// Creamos el panel en un objeto para que aparezca en una ventan.
+		Object[] menu = { "Create new Administrator\n\n", "Name", name, "Surname", surname, "Phone (Ex: 623456789)",
+				phone, "Email (Ex: yourname@email.com)", email, "DNI (Ex: 12345678A) ", dni, "Idclient", idclientfield,
+				"Date Birthday", fbirthday };
+
+		Connection conn = DataConnection.getConnection();
+		PreparedStatement statement = conn.prepareStatement(consulta);
+		ResultSet result = statement.executeQuery();
+
+		String rname = null;
+		String rsurname = null;
+		String rphone = null;
+		String rDNI = null;
+		String remail = null;
+		String rbirthday = null;
+		String ridclient = null;
+		while (result.next()) {
+			idclient = result.getString("idclient");
+			combo.addItem(idclient);
+		}
+		Object menubox[] = { "Select an Client to modify", combo };
+		optionbox = option = JOptionPane.showInternalOptionDialog(null, menubox, "Client", 0,
+				JOptionPane.QUESTION_MESSAGE, null, optionmenu, optionmenu[0]);
+		if (optionbox == 1 | optionbox == -1) {
+			return;
+		}
+		selectbox = (String) combo.getSelectedItem();
+		// Mostrar datos de user seleccionado
+		PreparedStatement datos = conn.prepareStatement("SELECT * FROM Client WHERE idclient='" + selectbox + "'");
+		ResultSet resultdatos = datos.executeQuery();
+		while (resultdatos.next()) {
+			rname = resultdatos.getString("name");
+			rsurname = resultdatos.getString("surname");
+			rphone = resultdatos.getString("phone");
+			rDNI = resultdatos.getString("DNI");
+			remail = resultdatos.getString("email");
+			rbirthday = resultdatos.getString("birthday");
+			ridclient = resultdatos.getString("idclient");
+		}
+		do {
+			name.setText(rname);
+			surname.setText(rsurname);
+			phone.setText(rphone);
+			email.setText(remail);
+			dni.setText(rDNI);
+			idclientfield.setText(ridclient);
+			fbirthday.setText(rbirthday);
+			caderrors = "";
+			error = false;
+			option = JOptionPane.showInternalOptionDialog(null, menu, "Client", 0, JOptionPane.QUESTION_MESSAGE, null,
+					optionmenu, optionmenu[0]);
+			if (option == -1 || option == 1) {
+				return;
+			}
+			// input name
+			name.setBorder(borderdefault);
+			getName = name.getText();
+			if (getName.isEmpty()) {// Si esta vacio entra en el error.
+				name.setBorder(bordererror);
+				caderrors = caderrors + "- Name empty\n";
+				error = true;
+			} else {
+				if (validate.validaname(getName) == false) {
+					name.setBorder(bordererror);
+					caderrors = caderrors + "- Name Incorrect, use only letters\n";
+					error = true;
+				}
+			}
+			// Input Surname
+			surname.setBorder(borderdefault);
+			getSurname = surname.getText();
+			if (getSurname.isEmpty()) {// Si esta vacio entra en el error.
+				surname.setBorder(bordererror);
+				caderrors = caderrors + "- Surname empty\n";
+				error = true;
+			} else {
+				if (validate.validasurname(getSurname) == false) {
+					surname.setBorder(bordererror);
+					caderrors = caderrors + "- Surname Incorrect, use only letters\n";
+					error = true;
+				}
+			}
+			// Input phone
+			phone.setBorder(borderdefault);
+			getPhone = phone.getText();
+			if (getPhone.isEmpty()) {
+				phone.setBorder(bordererror);
+				caderrors = caderrors + "- Phone empty\n";
+				error = true;
+			} else {
+				if (validate.validaphone(getPhone) == false) {
+					phone.setBorder(bordererror);
+					caderrors = caderrors + "- Phone Incorrect\n";
+					error = true;
+				}
+			}
+			// Input email
+			email.setBorder(borderdefault);
+			getEmail = email.getText();
+			if (getEmail.isEmpty()) {
+				email.setBorder(bordererror);
+				caderrors = caderrors + "- Email empty\n";
+				error = true;
+			} else {
+				if (validate.validaemail(getEmail) == false) {
+					email.setBorder(bordererror);
+					caderrors = caderrors + "- Email Incorrect\n";
+					error = true;
+				}
+			}
+			// Input DNI
+			dni.setBorder(borderdefault);
+			getDNI = dni.getText();
+			if (getDNI.isEmpty()) {
+				dni.setBorder(bordererror);
+				caderrors = caderrors + "- DNI empty\n";
+				error = true;
+			} else {
+				if (validate.validadni(getDNI) == false) {
+					dni.setBorder(bordererror);
+					caderrors = caderrors + "- DNI Incorrect\n";
+					error = true;
+				}
+			}
+			// Input idclient
+			idclientfield.setBorder(borderdefault);
+			getIdclient = idclientfield.getText();
+			if (getIdclient.isEmpty()) {
+				idclientfield.setBorder(bordererror);
+				caderrors = caderrors + "- IdClient empty\n";
+				error = true;
+			} else {
+				if (validate.validaidclient(getIdclient) == false) {
+					idclientfield.setBorder(bordererror);
+					caderrors = caderrors + "- Idclient Incorrect\n";
+					error = true;
+				}
+			}
+			// Input Fecha nacimiento
+			fbirthday.setBorder(borderdefault);
+			if (fbirthday.getText().isEmpty()) {
+				fbirthday.setBorder(bordererror);
+				caderrors = caderrors + "- Fecha Birthday empty\n";
+				error = true;
+			} else {
+				getBirthday = fbirthday.getText();
+				if (validate.validafecha(getBirthday) == true) {
+					birthday = new Fecha(getBirthday);
+					if (birthday.vfecha() == true) {
+						if (birthday.comparaNacimiento() == false) {
+							caderrors = caderrors + "- Ser a date before 01/01/2008\n";
+							error = true;
+						}
+					} else {
+						caderrors = caderrors + "- Insert a valid date!\n";
+						error = true;
+					}
+				} else {
+					fbirthday.setBorder(bordererror);
+					caderrors = caderrors + "- Set a corret date\n (dd/mm/yyyy)\n";
+					error = true;
+				}
+			}
+			// Si sale un error entra en el IF y los muestra todos.
+			if (error == true) {
+				Functions.mensajeerror(caderrors, "Error");
+			}
+
+		} while (error == true);
+		// creamos el Admin
+		Fecha registro = new Fecha();
+		Client client = new Client(getName, getSurname, getPhone, getDNI, getEmail, birthday, registro, getIdclient);
+		// Añadimos los datos a la BD
+		try {
+			System.out.println("parte modify");
+			String updatesql = "UPDATE Client SET name='" + getName + "',surname='" + getSurname + "',phone='"
+					+ getPhone + "',DNI='" + getDNI + "',email='" + getEmail + "',birthday='" + birthday.ToString()
+					+ "',registro='" + registro.ToString() + "',idclient='" + getIdclient + "',age='" + client.getAge()
+					+ "' WHERE idclient='" + selectbox + "'";
+			PreparedStatement updateclient = conn.prepareStatement(updatesql);
+			System.out.println(selectbox);
+			updateclient.executeUpdate();
+		} catch (Exception e) {
+			System.out.println(e);
+		} finally {
+			System.out.println("Update COmpleted");
 		}
 
 	}
