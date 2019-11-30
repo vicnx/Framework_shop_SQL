@@ -1,12 +1,13 @@
 package menu;
 
 import functions.Functions;
+import modules.users.functions.profile;
 
 public class menu_principal {
 //Este es el menu de productos
 	public static void main(String[] args) {
 		int option_principal = 0;
-		String boton_menu1[] = { "Users", "Products", "Exit" };
+		String boton_menu1[] = { "Users", "Products", "Profile", "Logout" };
 		do {
 			option_principal = Functions.menubuttons(boton_menu1, "\r\n" + "What do you want to manage?",
 					"Shop_Vicente", 0);
@@ -19,8 +20,11 @@ public class menu_principal {
 			if (option_principal == 1) {// Products
 				menu_products.main(null);
 			} // end if products
+			if (option_principal == 2) {// Profile
+				profile.main(null);
+			}
 
-		} while (option_principal != 2);
+		} while (option_principal != 3);
 	}
 
 }

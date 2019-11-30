@@ -1,17 +1,26 @@
 package modules.users.functions;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
+import javax.swing.table.DefaultTableModel;
 
 import classes.DataConnection;
 import classes.Fecha;
@@ -23,6 +32,25 @@ import modules.users.classes.Client;
 public class Functions_sql {
 	// read all Admins
 	public static void readAllAdmin() throws Exception {
+		// Cfremos una tabla para mostrar el contenido
+		String columnas[] = { "name", "surname", "DNI", "username" };
+		DefaultTableModel modelo = new DefaultTableModel();
+		modelo.setColumnIdentifiers(columnas);
+		JTable tabla = new JTable(modelo);
+		JScrollPane desplazamiento = new JScrollPane(tabla);
+		JFrame F = new JFrame();
+		JButton close = new JButton("Close");
+		desplazamiento.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		desplazamiento.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		tabla.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+		tabla.setFillsViewportHeight(true);
+		tabla.setDefaultEditor(Object.class, null);
+		F.getContentPane().add(desplazamiento, BorderLayout.NORTH);
+		F.getContentPane().add(close);
+		F.pack();
+		desplazamiento.setPreferredSize(new Dimension(400, 400));
+		Object ter[] = { desplazamiento };
+		// Read
 		String name = "";
 		String surname = "";
 		String phone = "";
@@ -35,6 +63,50 @@ public class Functions_sql {
 		Connection conn = DataConnection.getConnection();
 		PreparedStatement statement = conn.prepareStatement("SELECT * FROM Admin");
 		ResultSet result = statement.executeQuery();
+
+		tabla.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				String name = null, surname, phone, DNI, email, birthday, username, password, cad = "";
+
+				if (e.getClickCount() == 2) {
+					int row = tabla.getSelectedRow();
+					if (row == -1) {
+						Functions.mensajeerror("Nada que mostrar", "Error");
+					} else {
+						String dato = (String) tabla.getValueAt(row, 2);
+						try {
+							Connection read = DataConnection.getConnection();
+							PreparedStatement statement2 = read
+									.prepareStatement("SELECT * FROM Admin WHERE DNI='" + dato + "'");
+							ResultSet r = statement2.executeQuery();
+							while (r.next()) {
+								name = r.getString("name");
+								surname = r.getString("surname");
+								phone = r.getString("phone");
+								DNI = r.getNString("DNI");
+								email = r.getString("email");
+								birthday = r.getString("birthday");
+								username = r.getString("username");
+								password = r.getString("password");
+
+								cad = cad + "Name: " + name + "\nSurname: " + surname + "\nPhone: " + phone + "\nDNI: "
+										+ DNI + "\nEmail: " + email + "\nBirthday: " + birthday + "\nusername: "
+										+ username + "\npassword: " + password + "\n\n";
+							}
+						} catch (Exception e2) {
+							// TODO: handle exception
+						} // fintrycatch
+						if (cad.isEmpty()) {
+							Functions.mensajeerror("Nada que mostrar", "Error");
+						} else {
+							Functions.mensajeinf(cad, name);
+
+						}
+					}
+				} // fin 2 cliks
+			}
+		});
+
 		while (result.next()) {
 			name = result.getString("name");
 			surname = result.getString("surname");
@@ -45,6 +117,8 @@ public class Functions_sql {
 			username = result.getString("username");
 			password = result.getString("password");
 
+			// añadimos datos a la tabla
+			modelo.addRow(new Object[] { name, surname, DNI, username });
 			cad = cad + "Name: " + name + "\nSurname: " + surname + "\nPhone: " + phone + "\nDNI: " + DNI + "\nEmail: "
 					+ email + "\nBirthday: " + birthday + "\nusername: " + username + "\npassword: " + password
 					+ "\n\n";
@@ -56,7 +130,8 @@ public class Functions_sql {
 			Functions.mensajeerror("No hay Admins en la BD", "Error");
 
 		} else {
-			JOptionPane.showMessageDialog(null, cad);
+			JOptionPane.showMessageDialog(null, ter);
+			// F.setVisible(true);
 		}
 	}
 
@@ -325,7 +400,7 @@ public class Functions_sql {
 			// Input password
 			password.setBorder(borderdefault);
 			char[] p = password.getPassword();
-			getPassword = p.toString();
+			getPassword = String.valueOf(password.getPassword());
 			System.out.println("Password is: " + new String(p));
 			// getPassword = password.getText();
 			if (getPassword.isEmpty()) {

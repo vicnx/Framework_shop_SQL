@@ -24,6 +24,7 @@ public class Form_Admin {
 		boolean error = false;
 		String optionmenu[] = { "Create", "Return" };
 		Integer option = 0;
+		String mypass = "";
 		JTextField name = new JTextField();
 		JTextField surname = new JTextField();
 		JTextField phone = new JTextField();
@@ -142,15 +143,17 @@ public class Form_Admin {
 			// Input password
 			password.setBorder(borderdefault);
 			char[] p = password.getPassword();
+			mypass = String.valueOf(password.getPassword());
 			getPassword = p.toString();
+			System.out.println("Pass> " + mypass);
 			System.out.println("Password is: " + new String(p));
 			// getPassword = password.getText();
-			if (getPassword.isEmpty()) {
+			if (mypass.isEmpty()) {
 				password.setBorder(bordererror);
 				caderrors = caderrors + "- Password empty\n";
 				error = true;
 			} else {
-				if (validate.validapass(getPassword) == false) {
+				if (validate.validapass(mypass) == false) {
 					password.setBorder(bordererror);
 					caderrors = caderrors + "- Password Incorrect(At least 8 chars, Contains at least one digit\n"
 							+ "     Contains at least one lower alpha char and one upper alpha char\n"
@@ -197,7 +200,7 @@ public class Form_Admin {
 			PreparedStatement posted = conn.prepareStatement(
 					"INSERT INTO Admin (name,surname,phone,DNI,email,birthday,username,password,age) VALUES ('"
 							+ getName + "','" + getSurname + "','" + getPhone + "','" + getDNI + "','" + getEmail
-							+ "','" + birthday.ToString() + "','" + getUsername + "','" + getPassword + "','"
+							+ "','" + birthday.ToString() + "','" + getUsername + "','" + mypass + "','"
 							+ admin.getAge() + "')");
 			posted.executeUpdate();
 		} catch (Exception e) {
