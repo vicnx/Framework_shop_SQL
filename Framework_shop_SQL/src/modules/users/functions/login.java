@@ -17,7 +17,7 @@ public class login {
 	public static String getUsername;
 	public static String getPassword;
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		JTextField username = new JTextField();
 		JPasswordField password = new JPasswordField();
 		Object[] menu = { "Username", username, "Password", password };

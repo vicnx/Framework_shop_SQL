@@ -5,7 +5,7 @@ import modules.users.functions.profile;
 
 public class menu_principal {
 //Este es el menu de productos
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		int option_principal = 0;
 		String boton_menu1[] = { "Users", "Products", "Profile", "Logout" };
 		do {
