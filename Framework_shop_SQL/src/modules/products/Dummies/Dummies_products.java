@@ -24,6 +24,7 @@ public class Dummies_products {
 		Mobile Mobile = null;
 		tv TV = null;
 		Fecha f_inicio_garantia = new Fecha();
+		Fecha f_final_garantia = new Fecha("10/04/2040");
 		int time_garantia, width;
 		boolean correcto = false;
 		dummies = functions.Functions.validnum("How much dummies? (por tipo de producto)", "Dummies");
@@ -39,14 +40,14 @@ public class Dummies_products {
 			name = classes.NameGenerator.generateName(0);
 			namemobile = classes.NameGenerator.generateName(0);
 			nametv = classes.NameGenerator.generateName(0);
-			brand = classes.NameGenerator.generateName(0);
+			brand = classes.NameGenerator.generateName(4);
 			Tablet = new Tablet(name, precio, "Android", brand, df2.format(result), 2, f_inicio_garantia,
-					f_inicio_garantia, "20", "Yes", 0, "2GB", "200GB", "4000");
+					f_final_garantia, "20", "Yes", 0, "2GB", "200GB", "4000");
 			Singleton.electronics.add(Tablet);
 			Mobile = new Mobile(namemobile, precio, "Android", brand, df2.format(result), 2, f_inicio_garantia,
-					f_inicio_garantia, 2, "2GB", "200GB", "4000");
+					f_final_garantia, 2, "2GB", "200GB", "4000");
 			Singleton.electronics.add(Mobile);
-			TV = new tv(nametv, precio, "Null", brand, df2.format(result), 2, f_inicio_garantia, f_inicio_garantia,
+			TV = new tv(nametv, precio, "Null", brand, df2.format(result), 2, f_inicio_garantia, f_final_garantia,
 					"yes", "4");
 			Singleton.electronics.add(TV);
 		}

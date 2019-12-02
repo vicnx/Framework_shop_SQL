@@ -10,15 +10,14 @@ public class NameGenerator {
 			"Carillo", "Carion", "Castiyo", "Castorena", "Castro", "Grande", "Grangenal", "Grano", "Grasia", "Griego",
 			"Grigalva" };
 	private static String[] Principio = { "Xiaomi", "Samsung", "Honor", "IPad", "huawei", "Realme", "Cubot", "Oppo",
-			"Xtrem", "Windows" };
+			"Xtrem", "Windows", "Alcatel", "Nokia", "Meizu", "Umidgi" };
 	private static String[] Final = { " air", " mi", " plus", " note", " pad", " tab", " M", "Z", " A", " B", " C",
 			" D", " F", " G", " H", " I", " J", " Version", " P", " R" };
 	private static String[] letras = { "X", "V", "Y", "Z", "J" };
-	private static Random r1 = new Random(900);
 	private static Random rand = new Random();
 
 	public static String generateName(int tipo) {
-		int number = (int) (Math.random() * (1 - 10 + 1) + 10);
+		int number = (int) (Math.random() * (1 - 200 + 1) + 200);
 		String cad = "";
 		if (tipo == 0) {// electronic
 			cad = Principio[rand.nextInt(Principio.length)] + Final[rand.nextInt(Final.length)] + number;
@@ -31,6 +30,9 @@ public class NameGenerator {
 		}
 		if (tipo == 3) {// letra DNI
 			cad = letras[rand.nextInt(letras.length)];
+		}
+		if (tipo == 4) {// brand
+			cad = Principio[rand.nextInt(Principio.length)];
 		}
 		return cad;
 	}
