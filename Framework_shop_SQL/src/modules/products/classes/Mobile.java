@@ -51,12 +51,11 @@ public class Mobile extends Electronic {
 
 	@Override
 	public String toString() {
-		return "Mobile [getName()=" + getName() + ", getBrand()=" + getBrand() + ", getPrice()=" + getPrice()
-				+ ", getSystem()=" + getSystem() + ", getTime_garantia()=" + getTime_garantia()
-				+ ", getF_inicio_garantia()=" + getF_inicio_garantia() + ", getF_final_garantia()="
-				+ f_final_garantia.ToString() + ", Dias restantes de garantia= " + getgarantia() + ", getRating()="
-				+ getRating() + ", ram=" + ram + ", capacity=" + capacity + ", batery=" + batery + ", width=" + width
-				+ "]";
+		return "Name=" + getName() + "\nBrand=" + getBrand() + "\nPrice=" + getPrice() + "\nSystem=" + getSystem()
+				+ "\nTime_garantia=" + getTime_garantia() + "\nF_inicio_garantia=" + getF_inicio_garantia()
+				+ "\nF_final_garantia=" + f_final_garantia.ToString() + "\nDias restantes de garantia= " + getgarantia()
+				+ "\nRating=" + getRating() + "\nram=" + ram + "\ncapacity=" + capacity + "\nbatery=" + batery
+				+ "\nwidth=" + width;
 	}
 
 }

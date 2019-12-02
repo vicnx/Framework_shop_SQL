@@ -15,6 +15,7 @@ public class Read_client {
 			}
 			if (option_principal == 0) {// Tablets
 				functions_Electronic_CRUD.readElectronic(0);
+				;
 			} // end if tablets
 			if (option_principal == 1) {// mobiles
 				functions_Electronic_CRUD.readElectronic(1);

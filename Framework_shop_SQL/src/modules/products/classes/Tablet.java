@@ -72,11 +72,11 @@ public class Tablet extends Electronic {
 
 	@Override
 	public String toString() {
-		return "Tablet [" + "name=" + getName() + ", brand=" + getBrand() + ", price=" + getPrice() + ", time_garantia="
-				+ getTime_garantia() + ", system=" + getSystem() + ", f_inicio_garantia=" + f_inicio_garantia.ToString()
-				+ ", f_final_garantia=" + f_final_garantia.ToString() + ", Dias restantes de garantia= " + getgarantia()
-				+ ", rating=" + getRating() + ", total_size=" + total_size + ", sim=" + sim + ", width=" + width
-				+ ", ram=" + ram + ", capacity=" + capacity + ", batery=" + batery + "]";
+		return "name=" + getName() + "\nbrand=" + getBrand() + "\nprice=" + getPrice() + "\ntime_garantia="
+				+ getTime_garantia() + "\nsystem=" + getSystem() + "\nf_inicio_garantia=" + f_inicio_garantia.ToString()
+				+ "\nf_final_garantia=" + f_final_garantia.ToString() + "\nDias restantes de garantia= " + getgarantia()
+				+ "\nrating=" + getRating() + "\ntotal_size=" + total_size + "\nsim=" + sim + "\nwidth=" + width
+				+ "\nram=" + ram + "\ncapacity=" + capacity + "\nbatery=" + batery;
 	}
 
 }

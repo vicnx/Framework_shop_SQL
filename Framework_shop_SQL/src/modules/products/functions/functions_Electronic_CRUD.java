@@ -1,8 +1,17 @@
 package modules.products.functions;
 
+import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.RowSorter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 import classes.Fecha;
 import functions.Functions;
@@ -109,46 +118,135 @@ public class functions_Electronic_CRUD {
 
 	// read electronico
 	public static void readElectronic(int tipo) {
+		String columnas[] = { "name", "price", "rating" };
+		DefaultTableModel modelo = new DefaultTableModel();
+		modelo.setColumnIdentifiers(columnas);
+		RowSorter<TableModel> sorter = new TableRowSorter<TableModel>(modelo);
+		JTable tabla = new JTable();
+		tabla.setModel(modelo);
+		tabla.setRowSorter(sorter);
+		JScrollPane desplazamiento = new JScrollPane(tabla);
+		desplazamiento.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		desplazamiento.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		tabla.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+		tabla.setFillsViewportHeight(true);
+		tabla.setDefaultEditor(Object.class, null);
+		desplazamiento.setPreferredSize(new Dimension(400, 400));
+		Object ter[] = { desplazamiento };
 		String read = "";
-		if (tipo == 0) { // Tablets
+		// order
+		if (tipo == 0) {
+			tabla.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e) {
+					String cad = "";
+					if (e.getClickCount() == 2) {
+						int row = tabla.getSelectedRow();
+						if (row == -1) {
+							Functions.mensajeerror("Nada que mostrar", "Error");
+						} else {
+							String dato = (String) tabla.getValueAt(row, 0);
+							for (int i = 0; i < Singleton.electronics.size(); i++) {
+								Electronic Electronic2 = Singleton.electronics.get(i);
+								if (Electronic2 instanceof Tablet) {
+									if (dato == Electronic2.getName()) {
+										cad = dato + ": \n" + Electronic2;
+									} // end if dato==
+								}
+
+							}
+						}
+						Functions.mensajeinf(cad, "Read Tablet");
+					} // endif count ==2
+				}// endvoidmouse
+			});
 			for (int i = 0; i < Singleton.electronics.size(); i++) {
 				Electronic Electronic = Singleton.electronics.get(i);
 				if (Electronic instanceof Tablet) {
+					modelo.addRow(new Object[] { Electronic.getName(), Electronic.getPrice(), Electronic.getRating() });
 					read = read + Electronic + "\n";
 				}
 			}
 			if (read == "") {
 				Functions.mensajeinf("Nothing", "Read");
 			} else {
-				Functions.mensajeinf(read, "READ Tablets");
+				JOptionPane.showMessageDialog(null, ter);
 			}
-		} // end if tablet
-		if (tipo == 1) { // Mobile
+		} // endif tablet
+		if (tipo == 1) {// mobile
+			tabla.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e) {
+					String cad = "";
+					if (e.getClickCount() == 2) {
+						int row = tabla.getSelectedRow();
+						if (row == -1) {
+							Functions.mensajeerror("Nada que mostrar", "Error");
+						} else {
+							String dato = (String) tabla.getValueAt(row, 0);
+							for (int i = 0; i < Singleton.electronics.size(); i++) {
+								Electronic Electronic2 = Singleton.electronics.get(i);
+								if (Electronic2 instanceof Mobile) {
+									if (dato == Electronic2.getName()) {
+										cad = dato + ": \n" + Electronic2;
+									} // end if dato==
+								}
+
+							}
+						}
+						Functions.mensajeinf(cad, "Read Mobile");
+					} // endif count ==2
+				}// endvoidmouse
+			});
 			for (int i = 0; i < Singleton.electronics.size(); i++) {
 				Electronic Electronic = Singleton.electronics.get(i);
 				if (Electronic instanceof Mobile) {
+					modelo.addRow(new Object[] { Electronic.getName(), Electronic.getPrice(), Electronic.getRating() });
 					read = read + Electronic + "\n";
 				}
 			}
 			if (read == "") {
 				Functions.mensajeinf("Nothing", "Read");
 			} else {
-				Functions.mensajeinf(read, "READ Mobiles");
+				JOptionPane.showMessageDialog(null, ter);
 			}
 		} // end if mobile
-		if (tipo == 2) { // tv
+		if (tipo == 2) {// TV
+			tabla.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e) {
+					String cad = "";
+					if (e.getClickCount() == 2) {
+						int row = tabla.getSelectedRow();
+						if (row == -1) {
+							Functions.mensajeerror("Nada que mostrar", "Error");
+						} else {
+							String dato = (String) tabla.getValueAt(row, 0);
+							for (int i = 0; i < Singleton.electronics.size(); i++) {
+								Electronic Electronic2 = Singleton.electronics.get(i);
+								if (Electronic2 instanceof tv) {
+									if (dato == Electronic2.getName()) {
+										cad = dato + ": \n" + Electronic2;
+									} // end if dato==
+								}
+
+							}
+						}
+						Functions.mensajeinf(cad, "Read TV");
+					} // endif count ==2
+				}// endvoidmouse
+			});
 			for (int i = 0; i < Singleton.electronics.size(); i++) {
-				Electronic TV = Singleton.electronics.get(i);
-				if (TV instanceof tv) {
-					read = read + TV + "\n";
+				Electronic Electronic = Singleton.electronics.get(i);
+				if (Electronic instanceof tv) {
+					modelo.addRow(new Object[] { Electronic.getName(), Electronic.getPrice(), Electronic.getRating() });
+					read = read + Electronic + "\n";
 				}
 			}
 			if (read == "") {
 				Functions.mensajeinf("Nothing", "Read");
 			} else {
-				Functions.mensajeinf(read, "READ TVs");
+				JOptionPane.showMessageDialog(null, ter);
 			}
-		}
+		} // eniftv
+
 	}// endfunction
 
 	// Delete

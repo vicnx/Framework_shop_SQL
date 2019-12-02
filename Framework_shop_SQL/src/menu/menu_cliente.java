@@ -11,7 +11,7 @@ public class menu_cliente {
 		int option_principal = 0;
 		String boton_menu1[] = { "Read", "Login", "Exit", "D" };
 		do {
-			option_principal = Functions.menubuttons(boton_menu1, "\r\n" + "What do you wantto do?", "Shop_Vicente", 0);
+			option_principal = Functions.menubuttons(boton_menu1, "What do you wantto do?", "Shop_Vicente", 0);
 			if (option_principal == -1) {
 				System.exit(0);
 			}
