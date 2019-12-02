@@ -12,8 +12,7 @@ public class menu_principal {
 		String boton_menu1[] = { "Users", "Products", "Profile", "Dummies", "Logout" };
 		String dummies[] = { "Products", "Clients", "Return" };
 		do {
-			option_principal = Functions.menubuttons(boton_menu1, "\r\n" + "What do you want to manage?",
-					"Shop_Vicente", 0);
+			option_principal = Functions.menubuttons(boton_menu1, "What do you want to manage?", "Admin_Panel", 0);
 			if (option_principal == -1) {
 				return;
 			}
