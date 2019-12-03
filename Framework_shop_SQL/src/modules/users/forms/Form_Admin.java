@@ -198,13 +198,13 @@ public class Form_Admin {
 		try {
 			Connection conn = DataConnection.getConnection();
 			PreparedStatement posted = conn.prepareStatement(
-					"INSERT INTO Admin (name,surname,phone,DNI,email,birthday,username,password,age) VALUES ('"
+					"INSERT INTO admin (name,surname,phone,DNI,email,birthday,username,password,age) VALUES ('"
 							+ getName + "','" + getSurname + "','" + getPhone + "','" + getDNI + "','" + getEmail
 							+ "','" + birthday.ToString() + "','" + getUsername + "','" + mypass + "','"
 							+ admin.getAge() + "')");
 			posted.executeUpdate();
 		} catch (Exception e) {
-			Functions.mensajeerror("DNI duplicado", "Error");
+			System.out.println(e);
 		} finally {
 			System.out.println("Insert COmpleted");
 		}
