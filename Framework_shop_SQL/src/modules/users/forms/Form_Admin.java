@@ -198,7 +198,7 @@ public class Form_Admin {
 		try {
 			Connection conn = DataConnection.getConnection();
 			PreparedStatement posted = conn.prepareStatement(
-					"INSERT INTO admin (name,surname,phone,DNI,email,birthday,username,password,age) VALUES ('"
+					"INSERT INTO Admin (name,surname,phone,DNI,email,birthday,username,password,age) VALUES ('"
 							+ getName + "','" + getSurname + "','" + getPhone + "','" + getDNI + "','" + getEmail
 							+ "','" + birthday.ToString() + "','" + getUsername + "','" + mypass + "','"
 							+ admin.getAge() + "')");
