@@ -44,7 +44,7 @@ public class profile {
 				"DNI (Ex: 12345678A) ", dnifield, "Username", usernamefieldfield, "Password", passwordfield,
 				"Date Birthday", birthdayfield };
 
-		String name = "", surname, phone, DNI, email, birthday, username, password, cad = "";
+		String name = "", surname, phone, DNI, email, birthday, username, password, age, cad = "";
 		String usernamefirst = login.getUsername;
 		String menu1[] = { "Update", "Close" };
 
@@ -61,9 +61,10 @@ public class profile {
 			birthday = result.getString("birthday");
 			username = result.getString("username");
 			password = result.getString("password");
+			age = result.getString("age");
 			cad = cad + "Name: " + name + "\nSurname: " + surname + "\nPhone: " + phone + "\nDNI: " + DNI + "\nEmail: "
-					+ email + "\nBirthday: " + birthday + "\nusername: " + username + "\npassword: " + password
-					+ "\n\n";
+					+ email + "\nBirthday: " + birthday + "\nusername: " + username + "\npassword: " + "********"
+					+ "\nage: " + age + "\n\n";
 
 		}
 

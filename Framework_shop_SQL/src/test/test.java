@@ -5,6 +5,11 @@ import modules.products.Dummies.Dummies_products;
 public class test {
 	public static void main(String[] args) {
 		Dummies_products.main(null);
-		test1.main(1);
+		try {
+			test1.deleteAdmin();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
