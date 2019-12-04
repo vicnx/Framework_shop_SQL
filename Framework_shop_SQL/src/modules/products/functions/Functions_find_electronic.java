@@ -9,23 +9,29 @@ import modules.products.classes.tv;
 public class Functions_find_electronic {
 	// Tablet
 	public static int find_tablet(Tablet t) {
+		int r = -1;
+		System.out.println(Singleton.electronics.size());
 		for (int i = 0; i < Singleton.electronics.size(); i++) {
+			System.out.println("dentro for " + i);
 			Electronic Tablet = Singleton.electronics.get(i);
 			if (Tablet instanceof Tablet) {
 				String name = ((Tablet) Tablet).getName();
 				String name2 = ((Tablet) t).getName();
+				System.out.println(name + "equals" + name2);
 				if (name.equals(name2)) {
 					return 1;
 				} else {
-					return -1;
+					r = -1;
 				}
 			}
 		}
-		return -1;
+		return r;
 	}
 
 	// Mobile
 	public static int find_mobile(Mobile m) {
+		int r = -1;
+
 		for (int i = 0; i < Singleton.electronics.size(); i++) {
 			Electronic Mobile = Singleton.electronics.get(i);
 			if (Mobile instanceof Mobile) {
@@ -34,15 +40,17 @@ public class Functions_find_electronic {
 				if (name.equals(name2)) {
 					return 1;
 				} else {
-					return -1;
+					r = -1;
 				}
 			}
 		}
-		return -1;
+		return r;
 	}
 
 	// TV
 	public static int find_tv(tv tv) {
+		int r = -1;
+
 		for (int i = 0; i < Singleton.electronics.size(); i++) {
 			Electronic TV = Singleton.electronics.get(i);
 			if (TV instanceof tv) {
@@ -51,10 +59,10 @@ public class Functions_find_electronic {
 				if (name.equals(name2)) {
 					return 1;
 				} else {
-					return -1;
+					r = -1;
 				}
 			}
 		}
-		return -1;
+		return r;
 	}
 }

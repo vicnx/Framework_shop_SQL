@@ -204,7 +204,7 @@ public class Form_Admin {
 							+ admin.getAge() + "')");
 			posted.executeUpdate();
 		} catch (Exception e) {
-			System.out.println(e);
+			Functions.mensajeerror("- Username duplicated", "Error");
 		} finally {
 			System.out.println("Insert COmpleted");
 		}

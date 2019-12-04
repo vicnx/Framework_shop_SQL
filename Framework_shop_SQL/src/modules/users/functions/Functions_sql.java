@@ -69,11 +69,11 @@ public class Functions_sql {
 					if (row == -1) {
 						Functions.mensajeerror("Nada que mostrar", "Error");
 					} else {
-						String dato = (String) tabla.getValueAt(row, 2);
+						String dato = (String) tabla.getValueAt(row, 3);
 						try {
 							Connection read = DataConnection.getConnection();
 							PreparedStatement statement2 = read
-									.prepareStatement("SELECT * FROM Admin WHERE DNI='" + dato + "'");
+									.prepareStatement("SELECT * FROM Admin WHERE username='" + dato + "'");
 							ResultSet r = statement2.executeQuery();
 							while (r.next()) {
 								name = r.getString("name");
@@ -537,7 +537,7 @@ public class Functions_sql {
 						getUsername = "", getPassword = "", getBirthday = "";
 				Fecha fbirthday = null;
 				boolean error = false;
-				String optionmenu[] = { "Create", "Return" };
+				String optionmenu[] = { "Update", "Return" };
 				Integer option = 0;
 				String mypass = "";
 				JTextField namefield = new JTextField();
@@ -556,7 +556,7 @@ public class Functions_sql {
 					if (row == -1) {
 						Functions.mensajeerror("Nada que mostrar", "Error");
 					} else {
-						String dato = (String) tabla.getValueAt(row, 2);
+						String dato = (String) tabla.getValueAt(row, 3);
 						try {
 							// Creamos el panel en un objeto para que aparezca en una ventan.
 							Object[] menu = { "Update a Aministrator\n\n", "Name", namefield, "Surname", surnamefield,
@@ -565,7 +565,7 @@ public class Functions_sql {
 									passwordfield, "Date Birthday", fbirthdayfield };
 							Connection read = DataConnection.getConnection();
 							PreparedStatement statement2 = read
-									.prepareStatement("SELECT * FROM Admin WHERE DNI='" + dato + "'");
+									.prepareStatement("SELECT * FROM Admin WHERE username='" + dato + "'");
 							ResultSet r = statement2.executeQuery();
 							while (r.next()) {
 								name = r.getString("name");

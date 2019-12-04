@@ -58,7 +58,10 @@ public class functions_Electronic_CRUD {
 						(String) arraytablets.get(10));// Añadimos cada una de las posiciones del Array con su
 														// respectivo
 														// Atributo
+				System.out.println(Functions_find_electronic.find_tablet(Tablet));
+
 				if (Functions_find_electronic.find_tablet(Tablet) == -1) {
+					System.out.println("Entra if");
 					Singleton.electronics.add(Tablet);// Añadimos el Objeto a la clase Electronics.
 					correcto = true;
 				} else {
@@ -71,7 +74,7 @@ public class functions_Electronic_CRUD {
 		if (tipo == 1) {// Mobile
 			do {
 				time_garantia = 2;// Functions.validpositive("Time", "Give me the time garantia");
-				f_inicio_garantia = null;// JOptionPane.showInputDialog("Start garanty?");
+				f_inicio_garantia = new Fecha();// JOptionPane.showInputDialog("Start garanty?");
 				// f_final_garantia = "1/2/2022";// JOptionPane.showInputDialog("Finish
 				// garanty?");
 				width = 8;// Functions.validpositive("width", "Give me the width");
@@ -99,7 +102,7 @@ public class functions_Electronic_CRUD {
 		if (tipo == 2) {// tv
 			do {
 				time_garantia = 2;// Functions.validpositive("Time", "Give me the time garantia");
-				f_inicio_garantia = null;// JOptionPane.showInputDialog("Start garanty?");
+				f_inicio_garantia = new Fecha();// JOptionPane.showInputDialog("Start garanty?");
 				// f_final_garantia = "1/2/2022";// JOptionPane.showInputDialog("Finish
 				// garanty?");
 				ArrayList<Object> arraytvs = new ArrayList<Object>();
@@ -165,14 +168,15 @@ public class functions_Electronic_CRUD {
 					} // endif count ==2
 				}// endvoidmouse
 			});
+			String readtablet = "";
 			for (int i = 0; i < Singleton.electronics.size(); i++) {
 				Electronic Electronic = Singleton.electronics.get(i);
 				if (Electronic instanceof Tablet) {
 					modelo.addRow(new Object[] { Electronic.getName(), Electronic.getPrice(), Electronic.getRating() });
-					read = read + Electronic + "\n";
+					readtablet = readtablet + Electronic + "\n";
 				}
 			}
-			if (read == "") {
+			if (readtablet == "") {
 				Functions.mensajeinf("Nothing", "Read");
 			} else {
 				JOptionPane.showMessageDialog(null, ter);
@@ -182,38 +186,44 @@ public class functions_Electronic_CRUD {
 			tabla.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
 					String cad = "";
+					int row = -1;
 					if (e.getClickCount() == 2) {
-						int row = tabla.getSelectedRow();
+						row = tabla.getSelectedRow();
+						String cadmobil = "";
 						if (row == -1) {
 							Functions.mensajeerror("Nada que mostrar", "Error");
 						} else {
 							String dato = (String) tabla.getValueAt(row, 0);
 							for (int i = 0; i < Singleton.electronics.size(); i++) {
-								Electronic Electronic2 = Singleton.electronics.get(i);
-								if (Electronic2 instanceof Mobile) {
-									if (dato == Electronic2.getName()) {
-										cad = dato + ": \n" + Electronic2;
+								Electronic Mobile = Singleton.electronics.get(i);
+								if (Mobile instanceof Mobile) {
+									if (dato == Mobile.getName()) {
+										System.out.println(dato + " igual " + Mobile.getName());
+										cadmobil = Mobile.toString();
 									} // end if dato==
 								}
 
 							}
 						}
-						Functions.mensajeinf(cad, "Read Mobile");
+						Functions.mensajeinf(cadmobil, "Read Mobile");
 					} // endif count ==2
 				}// endvoidmouse
 			});
+			// String readmobiles = "";
 			for (int i = 0; i < Singleton.electronics.size(); i++) {
 				Electronic Electronic = Singleton.electronics.get(i);
 				if (Electronic instanceof Mobile) {
 					modelo.addRow(new Object[] { Electronic.getName(), Electronic.getPrice(), Electronic.getRating() });
-					read = read + Electronic + "\n";
+					// readmobiles = readmobiles + Electronic + "\n";
 				}
 			}
-			if (read == "") {
-				Functions.mensajeinf("Nothing", "Read");
-			} else {
-				JOptionPane.showMessageDialog(null, ter);
-			}
+//			if (readmobiles == "") {
+//				Functions.mensajeinf("Nothing", "Read");
+//			} else {
+//				JOptionPane.showMessageDialog(null, ter);
+//			}
+			JOptionPane.showMessageDialog(null, ter);
+
 		} // end if mobile
 		if (tipo == 2) {// TV
 			tabla.addMouseListener(new MouseAdapter() {
@@ -239,14 +249,16 @@ public class functions_Electronic_CRUD {
 					} // endif count ==2
 				}// endvoidmouse
 			});
+			String readtvs = "";
 			for (int i = 0; i < Singleton.electronics.size(); i++) {
 				Electronic Electronic = Singleton.electronics.get(i);
 				if (Electronic instanceof tv) {
 					modelo.addRow(new Object[] { Electronic.getName(), Electronic.getPrice(), Electronic.getRating() });
-					read = read + Electronic + "\n";
+					readtvs = readtvs + Electronic + "\n";
 				}
+
 			}
-			if (read == "") {
+			if (readtvs == "") {
 				Functions.mensajeinf("Nothing", "Read");
 			} else {
 				JOptionPane.showMessageDialog(null, ter);
@@ -325,14 +337,15 @@ public class functions_Electronic_CRUD {
 					} // endif count ==2
 				}// endvoidmouse
 			});
+			String readtablet = "";
 			for (int i = 0; i < Singleton.electronics.size(); i++) {
 				Electronic Electronic = Singleton.electronics.get(i);
 				if (Electronic instanceof Tablet) {
 					modelo.addRow(new Object[] { Electronic.getName(), Electronic.getPrice(), Electronic.getRating() });
-					read = read + Electronic + "\n";
+					readtablet = readtablet + Electronic + "\n";
 				}
 			}
-			if (read == "") {
+			if (readtablet == "") {
 				Functions.mensajeinf("Nothing", "Read");
 			} else {
 				JOptionPane.showMessageDialog(null, ter);
@@ -389,14 +402,15 @@ public class functions_Electronic_CRUD {
 					} // endif count ==2
 				}// endvoidmouse
 			});
+			String readmobile = "";
 			for (int i = 0; i < Singleton.electronics.size(); i++) {
 				Electronic Electronic = Singleton.electronics.get(i);
 				if (Electronic instanceof Mobile) {
 					modelo.addRow(new Object[] { Electronic.getName(), Electronic.getPrice(), Electronic.getRating() });
-					read = read + Electronic + "\n";
+					readmobile = readmobile + Electronic + "\n";
 				}
 			}
-			if (read == "") {
+			if (readmobile == "") {
 				Functions.mensajeinf("Nothing", "Read");
 			} else {
 				JOptionPane.showMessageDialog(null, ter);
@@ -452,14 +466,15 @@ public class functions_Electronic_CRUD {
 					} // endif count ==2
 				}// endvoidmouse
 			});
+			String readtvs = "";
 			for (int i = 0; i < Singleton.electronics.size(); i++) {
 				Electronic Electronic = Singleton.electronics.get(i);
 				if (Electronic instanceof tv) {
 					modelo.addRow(new Object[] { Electronic.getName(), Electronic.getPrice(), Electronic.getRating() });
-					read = read + Electronic + "\n";
+					readtvs = readtvs + Electronic + "\n";
 				}
 			}
-			if (read == "") {
+			if (readtvs == "") {
 				Functions.mensajeinf("Nothing", "Read");
 			} else {
 				JOptionPane.showMessageDialog(null, ter);
@@ -499,6 +514,7 @@ public class functions_Electronic_CRUD {
 								Electronic Electronic2 = Singleton.electronics.get(i);
 								if (Electronic2 instanceof Tablet) {
 									if (dato == Electronic2.getName()) {
+										String realname = Electronic2.getName();
 										// Declaramos las variables necesarias.
 										String getName = "", getRam = "", getPrice = "", getSystem = "", getBrand = "",
 												getRating = "", getTotalsize = "", getCapacity = "", getBatery = "",
@@ -512,7 +528,8 @@ public class functions_Electronic_CRUD {
 										String tiposbrand[] = { "Samsung", "Xiaomi", "Apple", "Windows", "Huawei" };
 										String tipocapacity[] = { "32GB", "64GB", "128GB", "256GB", "500GB", "1000GB" };
 										String tiposim[] = { "Yes", "No" };
-										String tiposrating[] = { "☆", "☆☆", "☆☆☆", "☆☆☆☆", "☆☆☆☆☆" };
+										String tiposrating[] = { "☆", "☆☆", "☆☆☆", "☆☆☆☆",
+												"☆☆☆☆☆" };
 										Integer option = 0;
 										JTextField name = new JTextField();
 										JTextField price = new JTextField();
@@ -654,6 +671,20 @@ public class functions_Electronic_CRUD {
 											if (error == true) {
 												Functions.mensajeerror(caderrors, "Error");
 											}
+											Fecha inicio = new Fecha();
+											Tablet Tablet = null;
+											Tablet = new Tablet(getName, getPrice, getSystem, getBrand, getRating, 2,
+													inicio, fechafinal, getTotalsize, getSim, 10, getRam, getCapacity,
+													getBatery);
+											if (Functions_find_electronic.find_tablet(Tablet) == -1
+													|| Tablet.getName().equals(realname)) {
+												System.out.println(Tablet.getName() + " equals " + realname);
+												error = false;
+											} else {
+												Functions.mensajeerror("A tablet with that name already exist",
+														"Error");
+												error = true;
+											}
 										} while (error == true);
 										tabla.setValueAt(getName, row, 0);
 										tabla.setValueAt(getPrice, row, 1);
@@ -678,14 +709,15 @@ public class functions_Electronic_CRUD {
 					} // endif count ==2
 				}// endvoidmouse
 			});
+			String readtablets = "";
 			for (int i = 0; i < Singleton.electronics.size(); i++) {
 				Electronic Electronic = Singleton.electronics.get(i);
 				if (Electronic instanceof Tablet) {
 					modelo.addRow(new Object[] { Electronic.getName(), Electronic.getPrice(), Electronic.getRating() });
-					read = read + Electronic + "\n";
+					readtablets = readtablets + Electronic + "\n";
 				}
 			}
-			if (read == "") {
+			if (readtablets == "") {
 				Functions.mensajeinf("Nothing", "Read");
 			} else {
 				JOptionPane.showMessageDialog(null, ter);
@@ -705,6 +737,7 @@ public class functions_Electronic_CRUD {
 								Electronic Electronic2 = Singleton.electronics.get(i);
 								if (Electronic2 instanceof Mobile) {
 									if (dato == Electronic2.getName()) {
+										String realname = Electronic2.getName();
 										// Declaramos las variables necesarias.
 										String getName = "", getRam = "", getPrice = "", getSystem = "", getBrand = "",
 												getRating = "", getCapacity = "", getBatery = "", caderrors = "",
@@ -717,7 +750,8 @@ public class functions_Electronic_CRUD {
 												"Android_8.0", "Android_9.0", "Windows" };
 										String tiposbrand[] = { "Samsung", "Xiaomi", "Apple", "RealMe", "Huawei" };
 										String tipocapacity[] = { "32GB", "64GB", "128GB", "256GB", "500GB", "1000GB" };
-										String tiposrating[] = { "☆", "☆☆", "☆☆☆", "☆☆☆☆", "☆☆☆☆☆" };
+										String tiposrating[] = { "☆", "☆☆", "☆☆☆", "☆☆☆☆",
+												"☆☆☆☆☆" };
 										Integer option = 0;
 										JTextField name = new JTextField();
 										JTextField price = new JTextField();
@@ -834,6 +868,19 @@ public class functions_Electronic_CRUD {
 											if (error == true) {
 												Functions.mensajeerror(caderrors, "Error");
 											}
+											Fecha inicio = new Fecha();
+											Mobile Mobile = null;
+											Mobile = new Mobile(getName, getPrice, getSystem, getBrand, getRating, 2,
+													inicio, fechafinal, 10, getRam, getCapacity, getBatery);
+											if (Functions_find_electronic.find_mobile(Mobile) == -1
+													|| Mobile.getName().equals(realname)) {
+												System.out.println("Entra if");
+												error = false;
+											} else {
+												Functions.mensajeerror("A Mobile with that name already exist",
+														"Error");
+												error = true;
+											}
 										} while (error == true);
 										tabla.setValueAt(getName, row, 0);
 										tabla.setValueAt(getPrice, row, 1);
@@ -852,18 +899,19 @@ public class functions_Electronic_CRUD {
 
 							}
 						}
-						Functions.mensajeinf("Modificado con exito", "Update Tablet");
+						Functions.mensajeinf("Modificado con exito", "Update Mobile");
 					} // endif count ==2
 				}// endvoidmouse
 			});
+			String readmobiles = "";
 			for (int i = 0; i < Singleton.electronics.size(); i++) {
 				Electronic Electronic = Singleton.electronics.get(i);
 				if (Electronic instanceof Mobile) {
 					modelo.addRow(new Object[] { Electronic.getName(), Electronic.getPrice(), Electronic.getRating() });
-					read = read + Electronic + "\n";
+					readmobiles = readmobiles + Electronic + "\n";
 				}
 			}
-			if (read == "") {
+			if (readmobiles == "") {
 				Functions.mensajeinf("Nothing", "Read");
 			} else {
 				JOptionPane.showMessageDialog(null, ter);
@@ -883,6 +931,7 @@ public class functions_Electronic_CRUD {
 								Electronic Electronic2 = Singleton.electronics.get(i);
 								if (Electronic2 instanceof tv) {
 									if (dato == Electronic2.getName()) {
+										String realname = Electronic2.getName();
 										// Declaramos las variables necesarias.
 										String getName = "", getPrice = "", getSystem = "", getBrand = "",
 												getRating = "", getHdmis = "", getSmartTv = "", caderrors = "",
@@ -894,7 +943,8 @@ public class functions_Electronic_CRUD {
 												"Android_8.0", "Android_9.0", };
 										String tiposbrand[] = { "Samsung", "Sharp", "Peekton", "LG" };
 										String tipohdmis[] = { "1_HDMI", "2_HDMI", "3_HDMI", "4_HDMI" };
-										String tiposrating[] = { "☆", "☆☆", "☆☆☆", "☆☆☆☆", "☆☆☆☆☆" };
+										String tiposrating[] = { "☆", "☆☆", "☆☆☆", "☆☆☆☆",
+												"☆☆☆☆☆" };
 										String tiposmarttv[] = { "Yes", "No" };
 										Integer option = 0;
 										JTextField name = new JTextField();
@@ -996,6 +1046,18 @@ public class functions_Electronic_CRUD {
 											if (error == true) {
 												Functions.mensajeerror(caderrors, "Error");
 											}
+											Fecha inicio = new Fecha();
+											tv Tv = null;
+											Tv = new tv(getName, getPrice, getSystem, getBrand, getRating, 2, inicio,
+													fechafinal, getSmartTv, getHdmis);
+											if (Functions_find_electronic.find_tv(Tv) == -1
+													|| Tv.getName().equals(realname)) {
+												System.out.println("Entra if");
+												error = false;
+											} else {
+												Functions.mensajeerror("A TV with that name already exist", "Error");
+												error = true;
+											}
 										} while (error == true);
 										tabla.setValueAt(getName, row, 0);
 										tabla.setValueAt(getPrice, row, 1);
@@ -1013,18 +1075,19 @@ public class functions_Electronic_CRUD {
 
 							}
 						}
-						Functions.mensajeinf("Modificado con exito", "Update Tablet");
+						Functions.mensajeinf("Modificado con exito", "Update Mobile");
 					} // endif count ==2
 				}// endvoidmouse
 			});
+			String readtvs = "";
 			for (int i = 0; i < Singleton.electronics.size(); i++) {
 				Electronic Electronic = Singleton.electronics.get(i);
 				if (Electronic instanceof tv) {
 					modelo.addRow(new Object[] { Electronic.getName(), Electronic.getPrice(), Electronic.getRating() });
-					read = read + Electronic + "\n";
+					readtvs = readtvs + Electronic + "\n";
 				}
 			}
-			if (read == "") {
+			if (readtvs == "") {
 				Functions.mensajeinf("Nothing", "Read");
 			} else {
 				JOptionPane.showMessageDialog(null, ter);
