@@ -7,9 +7,9 @@ public class DataConnection {
 	// Atributos
 	private static Connection conn;
 	private static String driver = "com.mysql.cj.jdbc.Driver";
-	private static String user = "root";
-	private static String password = "";
-	private static String url = "jdbc:mysql://localhost:3306/shop";
+	private static String user = "vicnx";
+	private static String password = "12345678";
+	private static String url = "jdbc:mysql://localhost:3306/Shop";
 
 	// Conexion a la base de datos
 	public static Connection getConnection() throws Exception {
@@ -17,6 +17,9 @@ public class DataConnection {
 		try {
 			Class.forName(driver);
 			Connection conn = DriverManager.getConnection(url, user, password);
+			// Connection conn =
+			// DriverManager.getConnection("jdbc:mysql://localhost:3306/Shop", "root",
+			// "12345678");
 			System.out.println("Conection!...");
 			return conn;
 		} catch (Exception e) {

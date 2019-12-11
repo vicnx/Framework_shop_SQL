@@ -57,7 +57,7 @@ public class Functions_sql {
 		String password = "";
 		String cad = "";
 		Connection conn = DataConnection.getConnection();
-		PreparedStatement statement = conn.prepareStatement("SELECT * FROM Admin");
+		PreparedStatement statement = conn.prepareStatement("SELECT * FROM admin");
 		ResultSet result = statement.executeQuery();
 
 		tabla.addMouseListener(new MouseAdapter() {
